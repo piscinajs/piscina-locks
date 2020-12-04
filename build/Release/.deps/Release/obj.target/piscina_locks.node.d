@@ -1,0 +1,1 @@
+cmd_Release/obj.target/piscina_locks.node := g++ -o Release/obj.target/piscina_locks.node -shared -pthread -rdynamic -m64  -Wl,-soname=piscina_locks.node -Wl,--start-group Release/obj.target/piscina_locks/src/locks.o Release/obj.target/node_modules/node-addon-api/nothing.a -Wl,--end-group 
