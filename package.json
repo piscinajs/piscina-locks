@@ -15,15 +15,14 @@
   },
   "types": "./dist/lib/index.d.ts",
   "scripts": {
-    "prebuildify": "prebuildify --napi",
-    "prebuildify-ci": "prebuildify-ci download && ([ $(ls prebuilds | wc -l) = '2' ] || (echo 'Some prebuilds are missing'; exit 1))",
+    "prebuildify": "prebuildify --napi --strip",
     "install": "node-gyp-build",
     "build": "npm run prebuildify && tsc && npm run gen-esm-wrapper",
     "lint": "standardx \"**/*.{ts,mjs,js,cjs}\" | snazzy",
     "test-only": "tap",
     "test": "npm run lint && npm run build && npm run test-only",
     "gen-esm-wrapper": "gen-esm-wrapper . dist/esm-wrapper.mjs",
-    "prepack": "npm run build && npm run prebuildify-ci"
+    "prepack": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -61,7 +60,6 @@
     "abort-controller": "^3.0.0",
     "gen-esm-wrapper": "^1.1.1",
     "prebuildify": "^4.1.1",
-    "prebuildify-ci": "^1.0.5",
     "snazzy": "^9.0.0",
     "standardx": "^7.0.0",
     "tap": "^14.11.0",

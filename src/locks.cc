@@ -1,6 +1,5 @@
 #include <locks.h>
 #include <node_api.h>
-#include <unistd.h>
 #include <string>
 
 using namespace Napi;
