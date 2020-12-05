@@ -1,15 +1,15 @@
 'use strict';
 
 const { request } = require('../..');
-const { promisify } = require('util');
-const sleep = promisify(setTimeout);
 
-let resolve;
+let res;
 
-const p = new Promise((res) => resolve = res);
+const p = new Promise((resolve) => {
+  res = resolve;
+});
 
-(async function() {
-  setTimeout(resolve, 1000);
+(async function () {
+  setTimeout(res, 1000);
 
   // The lock can be held beyond the callback by using
   // an async function that returns a Promise that is
