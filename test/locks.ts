@@ -39,6 +39,27 @@ test('shared locks work', async ({ resolves }) => {
   await resolves(Promise.all([p1, p2]));
 });
 
+test('shared locks work reentrantly', async ({ is }) => {
+  const ret = await request('shared', { mode: 'shared' }, async () => {
+    await request('shared', { mode: 'shared' }, async () => {
+      await sleep(10);
+    });
+    return 1;
+  });
+  is(ret, 1);
+});
+
+test('exclusive locks work non-reentrantly', async ({ rejects }) => {
+  const ac = new AbortController();
+  const p = request('exclusive', async () => {
+    await request('exclusive', { signal: ac.signal as any, mode: 'shared' }, async () => {
+      await sleep(10);
+    });
+  });
+  setTimeout(() => ac.abort(), 100);
+  await rejects(p, /aborted/);
+});
+
 test('validates lock name is string', async ({ rejects }) => {
   rejects(() => request((Symbol('') as any), () => {}),
     /Cannot convert a Symbol/);
