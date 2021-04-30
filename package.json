@@ -1,6 +1,6 @@
 {
   "name": "piscina-locks",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A Web Locks API implementation for Node.js",
   "keywords": [
     "worker_threads",
@@ -19,7 +19,7 @@
     "install": "node-gyp-build",
     "build": "npm run prebuildify && tsc && npm run gen-esm-wrapper",
     "lint": "standardx \"**/*.{ts,mjs,js,cjs}\" | snazzy",
-    "test-only": "tap",
+    "test-only": "tap --ts",
     "test": "npm run lint && npm run build && npm run test-only",
     "gen-esm-wrapper": "gen-esm-wrapper . dist/esm-wrapper.mjs",
     "prepack": "npm run build"
@@ -54,16 +54,17 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^14.14.10",
-    "@typescript-eslint/eslint-plugin": "^4.9.0",
-    "@typescript-eslint/parser": "^4.9.0",
+    "@types/node": "^15.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
     "abort-controller": "^3.0.0",
     "gen-esm-wrapper": "^1.1.1",
     "prebuildify": "^4.1.1",
     "snazzy": "^9.0.0",
     "standardx": "^7.0.0",
-    "tap": "^14.11.0",
-    "typescript": "^4.1.2"
+    "tap": "^15.0.6",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
   },
   "dependencies": {
     "node-addon-api": "^3.0.2",

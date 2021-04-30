@@ -14,19 +14,19 @@ function sleep (n : number) {
   });
 }
 
-test('request and query are exposed on export', async ({ is }) => {
-  is(typeof request, 'function');
-  is(typeof query, 'function');
-  is(version, _version);
+test('request and query are exposed on export', async ({ equal }) => {
+  equal(typeof request, 'function');
+  equal(typeof query, 'function');
+  equal(version, _version);
 });
 
-test('basically works', async ({ is }) => {
+test('basically works', async ({ equal }) => {
   const ret = await request('test1', async (lock) => {
-    is(lock.name, 'test1');
-    is(lock.mode, 'exclusive');
+    equal(lock.name, 'test1');
+    equal(lock.mode, 'exclusive');
     return 1;
   });
-  is(ret, 1);
+  equal(ret, 1);
 });
 
 test('shared locks work', async ({ resolves }) => {
@@ -39,14 +39,14 @@ test('shared locks work', async ({ resolves }) => {
   await resolves(Promise.all([p1, p2]));
 });
 
-test('shared locks work reentrantly', async ({ is }) => {
+test('shared locks work reentrantly', async ({ equal }) => {
   const ret = await request('shared', { mode: 'shared' }, async () => {
     await request('shared', { mode: 'shared' }, async () => {
       await sleep(10);
     });
     return 1;
   });
-  is(ret, 1);
+  equal(ret, 1);
 });
 
 test('exclusive locks work non-reentrantly', async ({ rejects }) => {
@@ -89,9 +89,9 @@ test('validates options types', async ({ rejects }) => {
   rejects(() => request('', { steal: {} as any }, () => {}), TypeError);
 });
 
-test('generates a summary', async ({ is, ok }) => {
+test('generates a summary', async ({ equal, ok }) => {
   const summary = query();
-  is(typeof summary, 'object');
+  equal(typeof summary, 'object');
   ok(Array.isArray(summary.pending));
   ok(Array.isArray(summary.held));
 });
@@ -108,7 +108,7 @@ test('waits for lock to free', async ({ resolves, ok }) => {
   await resolves(Promise.all([p1, p2]));
 });
 
-test('cancels with AbortError', async ({ resolves, rejects, is }) => {
+test('cancels with AbortError', async ({ resolves, rejects, equal }) => {
   const unusedSignal = new EventEmitter();
   const p1 = request('hello', { signal: unusedSignal }, async () => {
     await sleep(10);
@@ -122,7 +122,7 @@ test('cancels with AbortError', async ({ resolves, rejects, is }) => {
     rejects(p2, /aborted/)
   ]);
 
-  is(unusedSignal.listenerCount('abort'), 0);
+  equal(unusedSignal.listenerCount('abort'), 0);
 });
 
 test('cancels with AbortError (2)', async ({ resolves, rejects }) => {
@@ -145,12 +145,12 @@ test('fails when already aborted', async ({ rejects }) => {
   await rejects(p1, /aborted/);
 });
 
-test('lock null when not available', async ({ resolves, is }) => {
+test('lock null when not available', async ({ resolves, equal }) => {
   const p1 = request('hello', async () => {
     await sleep(10);
   });
   const p2 = request('hello', { ifAvailable: true }, async (lock) => {
-    is(lock, null);
+    equal(lock, null);
   });
 
   await Promise.all([
