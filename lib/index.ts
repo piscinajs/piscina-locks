@@ -1,10 +1,12 @@
 import binding from 'node-gyp-build';
 import { version } from '../package.json';
 
+import { resolve } from 'path';
+
 const {
   LockRequest,
   snapshot
-} = binding('.');
+} = binding(resolve(__dirname, '../..'));
 
 const GRANTED = 0;
 const NOT_AVAILABLE = 1;
