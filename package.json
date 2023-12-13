@@ -1,5 +1,5 @@
 {
-  "name": "piscina-locks",
+  "name": "@piscina/locks",
   "version": "2.0.2",
   "description": "A Web Locks API implementation for Node.js",
   "keywords": [
@@ -54,17 +54,17 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^15.0.1",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
+    "@types/node": "^20.10.4",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
     "abort-controller": "^3.0.0",
-    "gen-esm-wrapper": "^1.1.1",
-    "prebuildify": "^4.1.1",
+    "gen-esm-wrapper": "^1.1.3",
+    "prebuildify": "^5.0.1",
     "snazzy": "^9.0.0",
     "standardx": "^7.0.0",
     "tap": "^15.0.6",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.4"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "node-addon-api": "^3.0.2",
