@@ -1,4 +1,16 @@
-on: [push, pull_request]
+on:
+  push:
+    branches:
+     - current
+     - next
+     - 'v*'
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
 
 name: CI
 
@@ -8,12 +20,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install Node.js 16
+        with:
+          persist-credentials: false
+      - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: v16.x
+          node-version: v21.x
+          cache: 'npm'
+          cache-dependency-path: package.json
+
       - name: Install dependencies
         run: npm install
+
       - name: Check linting
         run: npm run lint
 
@@ -23,18 +41,37 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        node-version: [12.x, 14.x, 15.x, 16.x]
+        node-version: [18.x, 20.x, 21.x]
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: package.json
+
+      - uses: actions/cache@v3
+        id: check-cache
+        with:
+            path: ~/.npm
+            key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
+            restore-keys: |
+              ${{ runner.os }}-node-${{ matrix.node-version }}-
+
       - name: Install Dependencies
         run: npm install
+
       - name: Test
         run: npm test
+
+      - name: Test Build
+        run: npm run build
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:

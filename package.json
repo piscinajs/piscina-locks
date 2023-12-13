@@ -1,5 +1,5 @@
 {
-  "name": "piscina-locks",
+  "name": "@piscina/locks",
   "version": "2.0.2",
   "description": "A Web Locks API implementation for Node.js",
   "keywords": [
