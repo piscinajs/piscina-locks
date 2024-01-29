@@ -62,7 +62,7 @@
     "prebuildify": "^5.0.1",
     "snazzy": "^9.0.0",
     "standardx": "^7.0.0",
-    "tap": "^15.0.6",
+    "tap": "^18.7.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
