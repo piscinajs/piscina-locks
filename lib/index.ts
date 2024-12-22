@@ -85,7 +85,7 @@ const kDefaultRequestOptions : FilledRequestOptions = {
 
 type LockCallback = (lock? : Lock | null) => void;
 
-async function request (
+export async function request (
   name : string,
   options? : RequestOptions | LockCallback,
   callback? : LockCallback) : Promise<any> {
@@ -159,11 +159,15 @@ async function request (
   }
 }
 
-function query () {
+export function query () {
   return snapshot();
 }
 
-export = {
+export {
+  version
+};
+
+export default {
   request,
   query,
   version
