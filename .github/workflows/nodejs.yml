@@ -49,6 +49,7 @@ jobs:
           persist-credentials: false
 
       - name: Use Node.js ${{ matrix.node-version }}
+        id: node_setup
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
@@ -59,11 +60,13 @@ jobs:
         run: npm install
 
       - name: Test
-        run: npm test
+        env:
+          NODE_VERSION: ${{ steps.node_setup.outputs.node-version }}
+        run: npm run test:ci
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.run_id }}-${{ matrix.os }}-${{ matrix.node-version }}-${{ github.sha }}
+          name: ${{ github.run_id }}-${{ matrix.os }}-${{ steps.node_setup.outputs.node-version }}-${{ github.sha }}
           retention-days: 5
           path: ./prebuilds
