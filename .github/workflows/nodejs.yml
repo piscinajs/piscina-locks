@@ -66,9 +66,7 @@ jobs:
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
-        env:
-          NODE_VERSION: ${{ steps.node_setup.outputs.node-version }}
         with:
-          name: ${{ github.run_id }}-${{ matrix.os }}-$NODE_VERSION-${{ github.sha }}
+          name: ${{ github.run_id }}-${{ matrix.os }}-${{ steps.node_setup.outputs.node-version }}-${{ github.sha }}
           retention-days: 5
           path: ./prebuilds
