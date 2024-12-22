@@ -16,11 +16,14 @@
   "types": "./dist/lib/index.d.ts",
   "scripts": {
     "prebuildify": "cross-env prebuildify --napi --strip --target $(node -v)",
+    "prebuildify:ci": "cross-env prebuildify --napi --strip --target $NODE_VERSION",
     "install": "node-gyp-build",
     "build": "npm run prebuildify && tsc && npm run gen-esm-wrapper",
+    "build:ci": "npm run prebuildify:ci && tsc && npm run gen-esm-wrapper",
     "lint": "standardx \"**/*.{ts,mjs,js,cjs}\" | snazzy",
     "test-only": "tap --ts",
     "test": "npm run lint && npm run build && npm run test-only",
+    "test:ci": "npm run lint && npm run build:ci && npm run test-only",
     "gen-esm-wrapper": "gen-esm-wrapper . dist/esm-wrapper.mjs",
     "prepack": "npm run build"
   },
