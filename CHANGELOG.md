@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.1](https://github.com/piscinajs/piscina-locks/compare/v3.1.0...v3.1.1) (2024-12-31)
+
+
+### Bug Fixes
+
+* correct bad merge commit causing invalid package.json exports ([#72](https://github.com/piscinajs/piscina-locks/issues/72)) ([dc50b94](https://github.com/piscinajs/piscina-locks/commit/dc50b94f562e333eb0a61471d8de0222e869b125))
+
 ## [3.1.0](https://github.com/piscinajs/piscina-locks/compare/v3.0.0...v3.1.0) (2024-12-22)
 
 
