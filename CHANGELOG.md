@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/piscinajs/piscina-locks/compare/v4.0.0...v5.0.0) (2025-09-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for v18 ([#100](https://github.com/piscinajs/piscina-locks/issues/100))
+* namespace piscina-locks ([#4](https://github.com/piscinajs/piscina-locks/issues/4))
+
+### Features
+
+* add darwin-arm64 ([356d8d8](https://github.com/piscinajs/piscina-locks/commit/356d8d888544b579cd124d1501120d3933822006))
+* drop support for v18 ([#100](https://github.com/piscinajs/piscina-locks/issues/100)) ([cc37cd9](https://github.com/piscinajs/piscina-locks/commit/cc37cd9ce236c158abb91be78809dbcf4af231bf))
+* namespace piscina-locks ([#4](https://github.com/piscinajs/piscina-locks/issues/4)) ([42c6173](https://github.com/piscinajs/piscina-locks/commit/42c61739920e2e73edbddbbdd844c3e4d49ab93d))
+
+
+### Bug Fixes
+
+* add provenance ([2f3b4c0](https://github.com/piscinajs/piscina-locks/commit/2f3b4c0beca827b3bf58c7fb8fcc85c2c2794228))
+* correct bad merge commit causing invalid package.json exports ([#72](https://github.com/piscinajs/piscina-locks/issues/72)) ([dc50b94](https://github.com/piscinajs/piscina-locks/commit/dc50b94f562e333eb0a61471d8de0222e869b125))
+
+
+### Reverts
+
+* package name ([bb1fbc0](https://github.com/piscinajs/piscina-locks/commit/bb1fbc0b830552fe06183abfdaec06e788f24df3))
+
 ## [4.0.0](https://github.com/piscinajs/piscina-locks/compare/v3.1.1...v4.0.0) (2025-09-03)
 
 

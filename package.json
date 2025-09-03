@@ -1,6 +1,6 @@
 {
   "name": "@piscina/locks",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "A Web Locks API implementation for Node.js",
   "keywords": [
     "worker_threads",
