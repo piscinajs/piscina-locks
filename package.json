@@ -37,6 +37,9 @@
     "test:ci": "npm run lint && npm run build:ci && npm run test-only",
     "prepack": "npm run build"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/piscinajs/piscina-locks.git"
