@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.1](https://github.com/piscinajs/piscina-locks/compare/v4.0.0...v4.0.1) (2025-09-03)
+
+
+### Bug Fixes
+
+* add provenance ([ad06926](https://github.com/piscinajs/piscina-locks/commit/ad06926bc72e7ad4db698fdf6b39367f43af81ea))
+
 ## [4.0.0](https://github.com/piscinajs/piscina-locks/compare/v3.1.1...v4.0.0) (2025-09-03)
 
 
