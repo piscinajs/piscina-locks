@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/piscinajs/piscina-locks/compare/v3.1.1...v4.0.0) (2025-09-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for v18 ([#100](https://github.com/piscinajs/piscina-locks/issues/100))
+
+### Features
+
+* drop support for v18 ([#100](https://github.com/piscinajs/piscina-locks/issues/100)) ([cc37cd9](https://github.com/piscinajs/piscina-locks/commit/cc37cd9ce236c158abb91be78809dbcf4af231bf))
+
 ### [3.1.1](https://github.com/piscinajs/piscina-locks/compare/v3.1.0...v3.1.1) (2024-12-31)
 
 
