@@ -1,5 +1,5 @@
 {
-  "name": "piscina-locks",
+  "name": "@piscina/locks",
   "version": "3.1.1",
   "description": "A Web Locks API implementation for Node.js",
   "keywords": [
@@ -36,6 +36,9 @@
     "test": "npm run lint && npm run build && npm run test-only",
     "test:ci": "npm run lint && npm run build:ci && npm run test-only",
     "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "repository": {
     "type": "git",
