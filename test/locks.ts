@@ -108,6 +108,24 @@ test('waits for lock to free', async ({ resolves, ok }) => {
   await resolves(Promise.all([p1, p2]));
 });
 
+test('waits for multiple locks to free', async ({ resolves, ok }) => {
+  let firstCheck : boolean = false;
+  let secondCheck : boolean = false;
+  const p0 = request('hello', async () => {
+    await sleep(10);
+    firstCheck = true;
+  })
+  const p1 = request('hello', async () => {
+    await sleep(10);
+    secondCheck = true;
+  });
+  const p2 = request('hello', async () => {
+    ok(firstCheck);
+    ok(secondCheck);
+  });
+  await resolves(Promise.all([p0, p1, p2]));
+});
+
 test('cancels with AbortError', async ({ resolves, rejects, equal }) => {
   const unusedSignal = new EventEmitter();
   const p1 = request('hello', { signal: unusedSignal }, async () => {
