@@ -114,7 +114,7 @@ test('waits for multiple locks to free', async ({ resolves, ok }) => {
   const p0 = request('hello', async () => {
     await sleep(10);
     firstCheck = true;
-  })
+  });
   const p1 = request('hello', async () => {
     await sleep(10);
     secondCheck = true;
