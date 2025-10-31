@@ -1,6 +1,6 @@
 {
   'targets': [{
-    'target_name': 'piscina_locks',
+    'target_name': '@piscina+locks',
     'sources': [ 'src/locks.cc' ],
     'include_dirs': [
       "src",

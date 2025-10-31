@@ -28,7 +28,8 @@
   "scripts": {
     "prebuildify": "cross-env prebuildify --napi --strip --target $(node -v)",
     "prebuildify:ci": "cross-env prebuildify --napi --strip --target $NODE_VERSION",
-    "install": "node-gyp-build",
+    "install": "node-gyp configure",
+    "postinstall": "node-gyp build",
     "build": "npm run prebuildify && tsup",
     "build:ci": "npm run prebuildify:ci && tsup",
     "lint": "standardx \"**/*.{ts,mjs,js,cjs}\" | snazzy",
@@ -84,7 +85,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "node-addon-api": "^8.3.0",
-    "node-gyp-build": "^4.2.3"
+    "node-addon-api": "^8.5.0",
+    "node-gyp-build": "^4.8.4"
   }
 }
