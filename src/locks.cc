@@ -200,9 +200,10 @@ void LockManager::ProcessQueue() {
     if (IsGrantable(request)) {
       Lock* lock = new Lock(request->name(), request->mode());
       held_.emplace_back(lock);
-      requests_.erase(
-          std::remove(requests_.begin(), requests_.end(), request),
-          requests_.end());
+      auto existingRequest = std::find(requests_.begin(), requests_.end(), request);
+      if (existingRequest != requests_.end()) {
+        requests_.erase(existingRequest);
+      }
       request->Notify(LockRequest::Status::GRANTED, lock);
     }
   }
