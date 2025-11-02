@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.2](https://github.com/piscinajs/piscina-locks/compare/v4.0.1...v4.0.2) (2025-11-02)
+
+
+### Features
+
+* add binaries ([96570e1](https://github.com/piscinajs/piscina-locks/commit/96570e13990da74d4de4719f074d9d0c8a025097))
+
+
+### Bug Fixes
+
+* builds ([#106](https://github.com/piscinajs/piscina-locks/issues/106)) ([b5232ce](https://github.com/piscinajs/piscina-locks/commit/b5232ce7cf30665ae2e9c2d5dbc30a1f5b0911f6))
+* queue not processing as expected with multiple requests made ([#105](https://github.com/piscinajs/piscina-locks/issues/105)) ([36314dd](https://github.com/piscinajs/piscina-locks/commit/36314ddc10285e001a08ae6820fd13f2ab4c29ff))
+
 ## [4.0.1](https://github.com/piscinajs/piscina-locks/compare/v4.0.0...v4.0.1) (2025-09-03)
 
 
