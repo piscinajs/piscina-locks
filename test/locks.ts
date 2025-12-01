@@ -1,4 +1,5 @@
-import { test } from 'tap';
+import { test } from 'node:test';
+import assert from 'node:assert';
 import { version as _version } from '../package.json';
 import { EventEmitter } from 'events';
 import { AbortController } from 'abort-controller';
@@ -14,42 +15,42 @@ function sleep (n : number) {
   });
 }
 
-test('request and query are exposed on export', async ({ equal }) => {
-  equal(typeof request, 'function');
-  equal(typeof query, 'function');
-  equal(version, _version);
+test('request and query are exposed on export', async () => {
+  assert.strictEqual(typeof request, 'function');
+  assert.strictEqual(typeof query, 'function');
+  assert.strictEqual(version, _version);
 });
 
-test('basically works', async ({ equal }) => {
+test('basically works', async () => {
   const ret = await request('test1', async (lock) => {
-    equal(lock.name, 'test1');
-    equal(lock.mode, 'exclusive');
+    assert.strictEqual(lock.name, 'test1');
+    assert.strictEqual(lock.mode, 'exclusive');
     return 1;
   });
-  equal(ret, 1);
+  assert.strictEqual(ret, 1);
 });
 
-test('shared locks work', async ({ resolves }) => {
+test('shared locks work', async () => {
   const p1 = request('hello', { mode: 'shared' }, async () => {
     await sleep(10);
   });
   const p2 = request('hello', { mode: 'shared' }, async () => {
     await sleep(10);
   });
-  await resolves(Promise.all([p1, p2]));
+  await Promise.all([p1, p2]);
 });
 
-test('shared locks work reentrantly', async ({ equal }) => {
+test('shared locks work reentrantly', async () => {
   const ret = await request('shared', { mode: 'shared' }, async () => {
     await request('shared', { mode: 'shared' }, async () => {
       await sleep(10);
     });
     return 1;
   });
-  equal(ret, 1);
+  assert.strictEqual(ret, 1);
 });
 
-test('exclusive locks work non-reentrantly', async ({ rejects }) => {
+test('exclusive locks work non-reentrantly', async () => {
   const ac = new AbortController();
   const p = request('exclusive', async () => {
     await request('exclusive', { signal: ac.signal as any, mode: 'shared' }, async () => {
@@ -57,58 +58,58 @@ test('exclusive locks work non-reentrantly', async ({ rejects }) => {
     });
   });
   setTimeout(() => ac.abort(), 100);
-  await rejects(p, /aborted/);
+  await assert.rejects(p, /aborted/);
 });
 
-test('validates lock name is string', async ({ rejects }) => {
-  rejects(() => request((Symbol('') as any), () => {}),
+test('validates lock name is string', async () => {
+  await assert.rejects(() => request((Symbol('') as any), () => {}),
     /Cannot convert a Symbol/);
 });
 
-test('validates callback is given', async ({ rejects }) => {
-  rejects(() => request(''), TypeError);
+test('validates callback is given', async () => {
+  await assert.rejects(() => request(''), TypeError);
 });
 
-test('validates options is an object', async ({ rejects }) => {
-  rejects(() => request('', 'hi' as any, () => {}), TypeError);
-  rejects(() => request('', 1 as any, () => {}), TypeError);
-  rejects(() => request('', null as any, () => {}), TypeError);
-  rejects(() => request('', undefined, () => {}), TypeError);
-  rejects(() => request('', true as any, () => {}), TypeError);
+test('validates options is an object', async () => {
+  await assert.rejects(() => request('', 'hi' as any, () => {}), TypeError);
+  await assert.rejects(() => request('', 1 as any, () => {}), TypeError);
+  await assert.rejects(() => request('', null as any, () => {}), TypeError);
+  await assert.rejects(() => request('', undefined, () => {}), TypeError);
+  await assert.rejects(() => request('', true as any, () => {}), TypeError);
 });
 
-test('validates options types', async ({ rejects }) => {
-  rejects(() => request('', { mode: 1 as any }, () => {}), RangeError);
-  rejects(() => request('', { mode: 'foo' as any }, () => {}), RangeError);
-  rejects(() => request('', { mode: true as any }, () => {}), RangeError);
-  rejects(() => request('', { ifAvailable: 'yes' as any }, () => {}), TypeError);
-  rejects(() => request('', { ifAvailable: 1 as any }, () => {}), TypeError);
-  rejects(() => request('', { ifAvailable: {} as any }, () => {}), TypeError);
-  rejects(() => request('', { steal: 1 as any }, () => {}), TypeError);
-  rejects(() => request('', { steal: 'hi' as any }, () => {}), TypeError);
-  rejects(() => request('', { steal: {} as any }, () => {}), TypeError);
+test('validates options types', async () => {
+  await assert.rejects(() => request('', { mode: 1 as any }, () => {}), RangeError);
+  await assert.rejects(() => request('', { mode: 'foo' as any }, () => {}), RangeError);
+  await assert.rejects(() => request('', { mode: true as any }, () => {}), RangeError);
+  await assert.rejects(() => request('', { ifAvailable: 'yes' as any }, () => {}), TypeError);
+  await assert.rejects(() => request('', { ifAvailable: 1 as any }, () => {}), TypeError);
+  await assert.rejects(() => request('', { ifAvailable: {} as any }, () => {}), TypeError);
+  await assert.rejects(() => request('', { steal: 1 as any }, () => {}), TypeError);
+  await assert.rejects(() => request('', { steal: 'hi' as any }, () => {}), TypeError);
+  await assert.rejects(() => request('', { steal: {} as any }, () => {}), TypeError);
 });
 
-test('generates a summary', async ({ equal, ok }) => {
+test('generates a summary', async () => {
   const summary = query();
-  equal(typeof summary, 'object');
-  ok(Array.isArray(summary.pending));
-  ok(Array.isArray(summary.held));
+  assert.strictEqual(typeof summary, 'object');
+  assert.ok(Array.isArray(summary.pending));
+  assert.ok(Array.isArray(summary.held));
 });
 
-test('waits for lock to free', async ({ resolves, ok }) => {
+test('waits for lock to free', async () => {
   let check : boolean = false;
   const p1 = request('hello', async () => {
     await sleep(10);
     check = true;
   });
   const p2 = request('hello', async () => {
-    ok(check);
+    assert.ok(check);
   });
-  await resolves(Promise.all([p1, p2]));
+  await Promise.all([p1, p2]);
 });
 
-test('waits for multiple locks to free', async ({ resolves, ok }) => {
+test('waits for multiple locks to free', async () => {
   let firstCheck : boolean = false;
   let secondCheck : boolean = false;
   const p0 = request('hello', async () => {
@@ -120,59 +121,60 @@ test('waits for multiple locks to free', async ({ resolves, ok }) => {
     secondCheck = true;
   });
   const p2 = request('hello', async () => {
-    ok(firstCheck);
-    ok(secondCheck);
+    assert.ok(firstCheck);
+    assert.ok(secondCheck);
   });
-  await resolves(Promise.all([p0, p1, p2]));
+  await Promise.all([p0, p1, p2]);
 });
 
-test('cancels with AbortError', async ({ resolves, rejects, equal }) => {
+test('cancels with AbortError', async () => {
   const unusedSignal = new EventEmitter();
   const p1 = request('hello', { signal: unusedSignal }, async () => {
     await sleep(10);
   });
   const signal = new EventEmitter();
   const p2 = request('hello', { signal }, async () => {});
+
+  // We need to set up the rejection handler before emitting abort
+  const p2Rejection = assert.rejects(p2, /aborted/);
+
   signal.emit('abort');
 
-  await Promise.all([
-    resolves(p1),
-    rejects(p2, /aborted/)
-  ]);
+  await p1;
+  await p2Rejection;
 
-  equal(unusedSignal.listenerCount('abort'), 0);
+  assert.strictEqual(unusedSignal.listenerCount('abort'), 0);
 });
 
-test('cancels with AbortError (2)', async ({ resolves, rejects }) => {
+test('cancels with AbortError (2)', async () => {
   const unusedAc = new AbortController();
   const p1 = request('hello', { signal: unusedAc.signal as any }, async () => {
     await sleep(10);
   });
   const ac = new AbortController();
   const p2 = request('hello', { signal: ac.signal as any }, async () => {});
+
+  // We need to set up the rejection handler before aborting
+  const p2Rejection = assert.rejects(p2, /aborted/);
+
   ac.abort();
 
-  await Promise.all([
-    resolves(p1),
-    rejects(p2, /aborted/)
-  ]);
+  await p1;
+  await p2Rejection;
 });
 
-test('fails when already aborted', async ({ rejects }) => {
+test('fails when already aborted', async () => {
   const p1 = request('hello', { signal: { aborted: true } as any }, async () => {});
-  await rejects(p1, /aborted/);
+  await assert.rejects(p1, /aborted/);
 });
 
-test('lock null when not available', async ({ resolves, equal }) => {
+test('lock null when not available', async () => {
   const p1 = request('hello', async () => {
     await sleep(10);
   });
   const p2 = request('hello', { ifAvailable: true }, async (lock) => {
-    equal(lock, null);
+    assert.strictEqual(lock, null);
   });
 
-  await Promise.all([
-    resolves(p1),
-    resolves(p2)
-  ]);
+  await Promise.all([p1, p2]);
 });

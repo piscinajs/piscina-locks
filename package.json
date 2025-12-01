@@ -33,7 +33,7 @@
     "build": "npm run prebuildify && tsup",
     "build:ci": "npm run prebuildify:ci && tsup",
     "lint": "standardx \"**/*.{ts,mjs,js,cjs}\" | snazzy",
-    "test-only": "tap --ts",
+    "test-only": "node --import tsx --test test/locks.ts",
     "test": "npm run lint && npm run build && npm run test-only",
     "test:ci": "npm run lint && npm run build:ci && npm run test-only",
     "prepack": "npm run build"
@@ -79,9 +79,8 @@
     "prebuildify": "^6.0.1",
     "snazzy": "^9.0.0",
     "standardx": "^7.0.0",
-    "tap": "^15.0.6",
-    "ts-node": "^10.9.2",
     "tsup": "^8.2.4",
+    "tsx": "^4.19.2",
     "typescript": "^5.3.3"
   },
   "dependencies": {
